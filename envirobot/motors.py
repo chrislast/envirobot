@@ -12,11 +12,11 @@ P_MOTA2 = 24
 H = GPIO.HIGH
 L = GPIO.LOW
 
-FORWARD  = [H,L,H,L]
-BACKWARD = [L,H,L,H]
+LEFT     = [H,L,H,L]
+RIGHT    = [L,H,L,H]
 STOP     = [L,L,L,L]
-LEFT     = [H,L,L,H]
-RIGHT    = [L,H,H,L]
+FORWARD  = [H,L,L,H]
+BACKWARD = [L,H,H,L]
 
 
 def move(command):
@@ -33,21 +33,23 @@ def setup():
     GPIO.setup(P_MOTB1, GPIO.OUT)
     GPIO.setup(P_MOTB2, GPIO.OUT)
 
-print("starting")
 setup()
-while True:
-    print("forward")
-    move(FORWARD)
-    time.sleep(2)
-    print("backward")
-    move(BACKWARD)
-    time.sleep(2)
-    print("left")
-    move(LEFT)
-    time.sleep(2)
-    print("right")
-    move(RIGHT)
-    time.sleep(2)
-    print("stop")
-    move(STOP)
-    time.sleep(5)
+
+if __name__ == "__main__":
+    print("starting")
+    while True:
+        print("forward")
+        move(FORWARD)
+        time.sleep(2)
+        print("backward")
+        move(BACKWARD)
+        time.sleep(2)
+        print("left")
+        move(LEFT)
+        time.sleep(2)
+        print("right")
+        move(RIGHT)
+        time.sleep(2)
+        print("stop")
+        move(STOP)
+        time.sleep(5)
