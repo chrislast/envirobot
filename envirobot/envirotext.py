@@ -33,6 +33,19 @@ MODE = Path("/home/pi/enviromode.txt")
 
 FONT = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 30)
 
+def modetext():
+    while True:
+        try:
+            return int(MODE.read_text())
+        except:
+            sleep(0.1)
+
+def texttext():
+    while True:
+        try:
+            return TEXT.read_text()
+        except:
+            sleep(0.1)
 
 def banner(txt, mode):
     img = Image.new('RGB', (WIDTH, HEIGHT), color=(0, 0, 0))
@@ -42,7 +55,7 @@ def banner(txt, mode):
     text_y = (80 - size_y) // 2
 
     for x in range(0,size_x + text_x + 1,2):
-        if x >= size_x + text_x or int(MODE.read_text()) != mode:
+        if x >= size_x + text_x or modetext() != mode:
             break
         draw.rectangle((0, 0, 160, 80), (0, 0, 0))
         draw.text((int(text_x - x), text_y), txt, font=FONT, fill=(255, 255, 255))
@@ -67,10 +80,15 @@ def main():
 
     while True:
 
-        mode = int(MODE.read_text())
+        while True:
+            try:
+                mode = modetext()
+                break
+            except ValueError:
+                print("ValueError")
 
         if mode == 0 and lastmode != 0:
-            DISP.clear()
+            print("Mode 0!")
 
         elif mode == 1 and lastmode != 1:
             show("MODE 1")
@@ -83,7 +101,7 @@ def main():
 
         elif mode == 4:
             if TEXT.exists():
-                banner(TEXT.read_text(), mode)
+                banner(texttext(), mode)
             else:
                 banner(MESSAGE, mode)
 
@@ -95,3 +113,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
